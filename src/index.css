@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 160 25% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 25% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 25% 12%;
+
+    /* AidFlow primary green #1D9E75 */
+    --primary: 161 70% 37%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 161 60% 95%;
+    --primary-glow: 161 70% 47%;
+
+    --secondary: 160 20% 96%;
+    --secondary-foreground: 160 25% 12%;
+
+    --muted: 160 15% 96%;
+    --muted-foreground: 160 10% 45%;
+
+    --accent: 161 60% 95%;
+    --accent-foreground: 161 70% 30%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 25 95% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    /* Dignity mode soft purple/pink */
+    --dignity-bg: 320 60% 98%;
+    --dignity-primary: 280 50% 60%;
+    --dignity-accent: 330 70% 75%;
+    --dignity-soft: 300 50% 96%;
+
+    --border: 160 15% 90%;
+    --input: 160 15% 90%;
+    --ring: 161 70% 37%;
+
+    --radius: 0.75rem;
+
+    --shadow-card: 0 1px 3px 0 hsl(160 15% 80% / 0.15), 0 1px 2px -1px hsl(160 15% 80% / 0.1);
+    --shadow-elevated: 0 10px 30px -10px hsl(161 70% 37% / 0.15);
+    --gradient-primary: linear-gradient(135deg, hsl(161 70% 37%), hsl(161 70% 47%));
+    --gradient-dignity: linear-gradient(135deg, hsl(320 60% 98%), hsl(280 50% 96%));
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 160 25% 8%;
+    --foreground: 0 0% 98%;
+    --card: 160 25% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 160 25% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 161 70% 47%;
+    --primary-foreground: 160 25% 8%;
+    --secondary: 160 20% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 160 20% 15%;
+    --muted-foreground: 160 10% 65%;
+    --accent: 160 20% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 160 20% 18%;
+    --input: 160 20% 18%;
+    --ring: 161 70% 47%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500;
+  }
+  .stat-card {
+    @apply bg-card rounded-xl p-6 border border-border transition-all duration-300 hover:-translate-y-0.5;
+    box-shadow: var(--shadow-card);
+  }
+  .stat-card:hover {
+    box-shadow: var(--shadow-elevated);
+  }
+}

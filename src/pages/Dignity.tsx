@@ -5,7 +5,7 @@ import { model } from "../gemini";
 
 export default function Dignity() {
   const [form, setForm] = useState({
-    type: "sanitary", pincode: "", message: ""
+    type: "sanitary", pincode: "", landmark: "", message: ""
   });
   const [submitted, setSubmitted] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
@@ -22,7 +22,8 @@ export default function Dignity() {
         title: `Anonymous ${form.type} request`,
         category: form.type,
         urgency: 8,
-        location: `Pincode ${form.pincode}, Kolkata`,
+        location: `Pincode ${form.pincode}, near ${form.landmark}, Kolkata`,
+        landmark: form.landmark,
         lat: 22.5726,
         lng: 88.3639,
         status: "pending",
@@ -32,7 +33,7 @@ export default function Dignity() {
         timestamp: new Date().toISOString()
       });
 
-      const prompt = `A woman has anonymously requested ${form.type} products in pincode ${form.pincode} in Kolkata. 
+      const prompt = `A woman has anonymously requested ${form.type} products in pincode ${form.pincode} in Kolkata near ${form.landmark}. 
 Write a warm, reassuring 2-sentence message confirming her request was received safely and anonymously. 
 Make her feel safe and respected. No personal details mentioned.`;
 
@@ -64,6 +65,7 @@ Make her feel safe and respected. No personal details mentioned.`;
         {!submitted ? (
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-purple-100">
             <div className="space-y-4">
+
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1 block">
                   What do you need?
@@ -93,6 +95,18 @@ Make her feel safe and respected. No personal details mentioned.`;
 
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1 block">
+                  Nearest Landmark (anonymous)
+                </label>
+                <input
+                  value={form.landmark}
+                  onChange={e => setForm({...form, landmark: e.target.value})}
+                  placeholder="e.g. Near bus stop, beside temple"
+                  className="w-full border border-purple-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-400"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1 block">
                   Optional message (anonymous)
                 </label>
                 <textarea
@@ -111,10 +125,10 @@ Make her feel safe and respected. No personal details mentioned.`;
               >
                 {loading ? "Submitting safely..." : "🔒 Request Anonymously"}
               </button>
+
             </div>
           </div>
         ) : (
-          /* Success State */
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-purple-100 text-center">
             <div className="text-5xl mb-4">💜</div>
             <h2 className="text-xl font-bold text-purple-700 mb-3">Request Received Safely</h2>
@@ -122,7 +136,11 @@ Make her feel safe and respected. No personal details mentioned.`;
               <p className="text-gray-600 leading-relaxed italic mb-4">"{aiResponse}"</p>
             )}
             <button
-              onClick={() => { setSubmitted(false); setForm({ type: "sanitary", pincode: "", message: "" }); setAiResponse(""); }}
+              onClick={() => {
+                setSubmitted(false);
+                setForm({ type: "sanitary", pincode: "", landmark: "", message: "" });
+                setAiResponse("");
+              }}
               className="text-purple-600 text-sm underline"
             >
               Make another request
@@ -134,7 +152,7 @@ Make her feel safe and respected. No personal details mentioned.`;
         <div className="grid grid-cols-3 gap-3 mt-6">
           {[
             { icon: "🔒", title: "Identity never shared", desc: "Zero personal data stored" },
-            { icon: "👤", title: "Volunteer only sees pincode", desc: "Your location stays private" },
+            { icon: "👤", title: "Only landmark shared", desc: "Your name stays private" },
             { icon: "✅", title: "Verified safe delivery", desc: "All volunteers are verified" },
           ].map((card) => (
             <div key={card.title} className="bg-white rounded-xl p-3 text-center shadow-sm border border-purple-100">

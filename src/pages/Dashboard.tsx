@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import HeatMap from "../components/Heatmap";
 
 const categoryEmoji: Record<string, string> = {
   food: "🍱", medicine: "💊", hygiene: "🧴",
@@ -39,8 +40,8 @@ export default function Dashboard() {
     : needs.filter((n: any) => n.category === filter);
 
   const categories = [
-    "all","food","medicine","hygiene",
-    "sanitary","shelter","water","clothing","emergency"
+    "all", "food", "medicine", "hygiene",
+    "sanitary", "shelter", "water", "clothing", "emergency"
   ];
 
   const markDelivered = async (id: string) => {
@@ -84,6 +85,19 @@ export default function Dashboard() {
         ))}
       </div>
 
+      {/* Live Heatmap */}
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-semibold">
+            🗺️ Live Community Needs Map — Kolkata
+          </h2>
+          <span className="text-xs text-gray-400">
+            Click any circle to see details
+          </span>
+        </div>
+        <HeatMap />
+      </div>
+
       {/* Category Filters */}
       <div className="flex flex-wrap gap-2 mb-4">
         {categories.map(cat => (
@@ -109,7 +123,7 @@ export default function Dashboard() {
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
-              {["Title","Category","Urgency","Location","Status","Decay","Actions"].map(h => (
+              {["Title", "Category", "Urgency", "Location", "Status", "Decay", "Actions"].map(h => (
                 <th
                   key={h}
                   className="text-left px-4 py-3 text-sm font-medium text-gray-500"
